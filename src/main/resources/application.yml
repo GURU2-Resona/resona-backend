@@ -1,0 +1,15 @@
+spring:
+  application:
+    name: resona-backend
+
+  profiles:
+    active: local
+
+  jpa:
+    properties:
+      hibernate:
+        format_sql: true
+    open-in-view: false
+
+server:
+  port: ${SERVER_PORT:8080}
