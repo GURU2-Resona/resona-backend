@@ -32,8 +32,8 @@ public class SwaggerConfig {
 
     private Info apiInfo() {
         return new Info()
-                .title("HRR Project API") // 프로젝트 이름 수정
-                .description("HRR 프로젝트 API 명세서")
+                .title("Resona Project API") // 프로젝트 이름 수정
+                .description("Resona 프로젝트 API 명세서")
                 .version("1.0.0");
     }
 }
