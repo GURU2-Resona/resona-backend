@@ -25,4 +25,8 @@ public class Member {
     @Column(name = "nickname", nullable = false)
     private String nickname;
 
+    public void updateNickname(String nickname) {
+        this.nickname = nickname;
+    }
+
 }
