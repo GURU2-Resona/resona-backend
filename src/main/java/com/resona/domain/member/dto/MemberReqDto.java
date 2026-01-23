@@ -14,4 +14,11 @@ public class MemberReqDto {
         private String nickName;
 
     }
+
+    @Getter
+    public static class Login {
+        @NotBlank
+        private String token;
+    }
+
 }
