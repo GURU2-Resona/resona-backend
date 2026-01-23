@@ -13,16 +13,14 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 @RequestMapping("/members")
 @Tag(name = "Member", description = "회원 관련 API")
-public class MemberController implements MemberControllerDocs{
+public class MemberController implements MemberControllerDocs {
 
-    private final MemberServiceImpl memberService;
+  private final MemberServiceImpl memberService;
 
-    @PatchMapping("nickname")
-    public ApiResponse<Void> saveNickname(
-            @RequestHeader("Authorization") String token,
-            @Valid @RequestBody MemberReqDto.Nickname dto
-    ){
-        memberService.saveNickname(token, dto.getNickName());
-        return ApiResponse.onSuccess(SuccessCode.NICKNAME_SAVE_OK, null);
-    }
+  @PatchMapping("nickname")
+  public ApiResponse<Void> saveNickname(
+      @RequestHeader("Authorization") String token, @Valid @RequestBody MemberReqDto.Nickname dto) {
+    memberService.saveNickname(token, dto.getNickName());
+    return ApiResponse.onSuccess(SuccessCode.NICKNAME_SAVE_OK, null);
+  }
 }
