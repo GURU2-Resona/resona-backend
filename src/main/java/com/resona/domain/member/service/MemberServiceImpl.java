@@ -10,26 +10,27 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class MemberServiceImpl implements MemberService{
+public class MemberServiceImpl implements MemberService {
 
-    private final MemberRepository memberRepository;
+  private final MemberRepository memberRepository;
 
-    @Override
-    @Transactional
-    public void saveNickname(String token, String nickname) {
-        String email = getEmailByAccessToken(token);
-        Member member = getMemberByEmail(email);
-        member.updateNickname(nickname);
-    }
+  @Override
+  @Transactional
+  public void saveNickname(String token, String nickname) {
+    String email = getEmailByAccessToken(token);
+    Member member = getMemberByEmail(email);
+    member.updateNickname(nickname);
+  }
 
-    private Member getMemberByEmail(String email) {
-        return memberRepository.findByEmail(email)
-                .orElseThrow(() -> new MemberException(ErrorCode.NOT_FOUND));
-    }
+  private Member getMemberByEmail(String email) {
+    return memberRepository
+        .findByEmail(email)
+        .orElseThrow(() -> new MemberException(ErrorCode.NOT_FOUND));
+  }
 
-    private String getEmailByAccessToken(String token) {
-        String accessToken = token.split(" ")[1];
-//        return jwtUtil.getEmail(accessToken);
-        return "";
-    }
+  private String getEmailByAccessToken(String token) {
+    String accessToken = token.split(" ")[1];
+    //        return jwtUtil.getEmail(accessToken);
+    return "";
+  }
 }
