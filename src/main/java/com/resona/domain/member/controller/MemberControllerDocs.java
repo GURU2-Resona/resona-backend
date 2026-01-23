@@ -12,21 +12,12 @@ import org.springframework.web.bind.annotation.RequestHeader;
 
 public interface MemberControllerDocs {
 
-    @Operation(
-            summary = "닉네임 저장 API",
-            description = "닉네임을 저장합니다."
-    )
-    ApiResponse<Void> saveNickname(
-            @RequestHeader("Authorization") String token,
-            @Valid @RequestBody MemberReqDto.Nickname dto
-    );
+  @Operation(summary = "닉네임 저장 API", description = "닉네임을 저장합니다.")
+  ApiResponse<Void> saveNickname(
+      @RequestHeader("Authorization") String token, @Valid @RequestBody MemberReqDto.Nickname dto);
 
-    @Operation(
-            summary = "회원 프로필 조회 API",
-            description = "특정 회원의 프로필 정보(ID, 닉네임, 프로필 이미지)를 조회합니다."
-    )
-    ApiResponse<MemberResDto.Profile> getMemberProfile(
-            @Parameter(description = "조회할 회원의 ID", example = "1")
-            @PathVariable(name = "memberId") Long memberId
-    );
+  @Operation(summary = "회원 프로필 조회 API", description = "특정 회원의 프로필 정보(ID, 닉네임, 프로필 이미지)를 조회합니다.")
+  ApiResponse<MemberResDto.Profile> getMemberProfile(
+      @Parameter(description = "조회할 회원의 ID", example = "1") @PathVariable(name = "memberId")
+          Long memberId);
 }
