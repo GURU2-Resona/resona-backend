@@ -1,12 +1,14 @@
 package com.resona.domain.member.service;
 
+import com.resona.domain.member.converter.MemberConverter;
+import com.resona.domain.member.dto.MemberResDto;
 import com.resona.domain.member.entity.Member;
 import com.resona.domain.member.exception.MemberException;
 import com.resona.domain.member.repository.MemberRepository;
 import com.resona.global.response.ErrorCode;
-import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
@@ -20,6 +22,17 @@ public class MemberServiceImpl implements MemberService {
     String email = getEmailByAccessToken(token);
     Member member = getMemberByEmail(email);
     member.updateNickname(nickname);
+  }
+
+  @Override
+  @Transactional(readOnly = true)
+  public MemberResDto.Profile getMemberProfile(Long memberId) {
+    Member member =
+        memberRepository
+            .findById(memberId)
+            .orElseThrow(() -> new MemberException(ErrorCode.NOT_FOUND));
+
+    return MemberConverter.toProfileResDto(member);
   }
 
   private Member getMemberByEmail(String email) {
