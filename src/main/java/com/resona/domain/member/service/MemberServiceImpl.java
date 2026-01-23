@@ -1,5 +1,6 @@
 package com.resona.domain.member.service;
 
+import com.resona.domain.member.dto.KakaoUserInfo;
 import com.resona.domain.member.entity.Member;
 import com.resona.domain.member.exception.MemberException;
 import com.resona.domain.member.repository.MemberRepository;
@@ -26,6 +27,16 @@ public class MemberServiceImpl implements MemberService{
         return memberRepository.findByEmail(email)
                 .orElseThrow(() -> new MemberException(ErrorCode.NOT_FOUND));
     }
+
+    @Transactional
+    public Member loginOrSignUp(KakaoUserInfo userInfo) {
+        return memberRepository
+                .findByProviderId(userInfo.getProviderId())
+                .orElseGet(() -> memberRepository.save(
+                        Member.createKakao(userInfo)
+                ));
+    }
+
 
     private String getEmailByAccessToken(String token) {
         String accessToken = token.split(" ")[1];
