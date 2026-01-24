@@ -4,6 +4,7 @@ import com.resona.domain.member.entity.Member;
 import com.resona.domain.member.repository.MemberRepository;
 import com.resona.domain.post.dto.PostCreateRequest;
 import com.resona.domain.post.dto.PostCreateResponse;
+import com.resona.domain.post.dto.PostDetailResponse;
 import com.resona.domain.post.dto.PostListResponse;
 import com.resona.domain.post.entity.Post;
 import com.resona.domain.post.entity.PostScrap;
@@ -92,5 +93,30 @@ public class PostServiceImpl implements PostService {
 
     // Entity 리스트를 DTO 리스트로 변환
     return posts.stream().map(PostListResponse::of).collect(Collectors.toList());
+  }
+
+  // 상세 조회
+  @Override
+  public PostDetailResponse getPostDetail(Long memberId, Long postId) {
+    // 게시글 조회 (작성자 정보 포함 fetch join)
+    Post post =
+        postRepository
+            .findByIdWithMember(postId)
+            .orElseThrow(() -> new GlobalException(ErrorCode.POST_NOT_FOUND));
+
+    // 현재 조회를 요청한 사용자 조회 (스크랩 여부 확인용)
+    Member currentMember =
+        memberRepository
+            .findById(memberId)
+            .orElseThrow(() -> new GlobalException(ErrorCode.NOT_FOUND));
+
+    // 스크랩 여부 확인 (exists 쿼리 사용)
+    boolean isSaved = postScrapRepository.existsByMemberAndPost(currentMember, post);
+
+    // 내 글인지 확인 (현재 로그인한 ID와 게시글 작성자 ID 비교)
+    boolean isMine = post.getMember().getId().equals(memberId);
+
+    // DTO 변환 및 반환
+    return PostDetailResponse.of(post, isSaved, isMine);
   }
 }

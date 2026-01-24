@@ -2,6 +2,7 @@ package com.resona.domain.post.controller;
 
 import com.resona.domain.post.dto.PostCreateRequest;
 import com.resona.domain.post.dto.PostCreateResponse;
+import com.resona.domain.post.dto.PostDetailResponse;
 import com.resona.domain.post.dto.PostListResponse;
 import com.resona.domain.post.entity.enums.Category;
 import com.resona.domain.post.entity.enums.Scene;
@@ -58,6 +59,17 @@ public class PostController {
       @RequestParam(required = false) Category category,
       @RequestParam(required = false) Scene scene) {
     List<PostListResponse> response = postService.getPosts(category, scene);
+    return ResponseEntity.status(SuccessCode.OK.getHttpStatus())
+        .body(ApiResponse.onSuccess(SuccessCode.OK, response));
+  }
+
+  @Operation(summary = "추천글 상세 조회", description = "추천글의 상세 정보를 조회합니다. (스크랩 여부, 본인 글 여부 포함)")
+  @GetMapping("/{postId}")
+  public ResponseEntity<ApiResponse<PostDetailResponse>> getPostDetail(
+      @RequestHeader("X-USER-ID") Long memberId, @PathVariable Long postId) {
+
+    PostDetailResponse response = postService.getPostDetail(memberId, postId);
+
     return ResponseEntity.status(SuccessCode.OK.getHttpStatus())
         .body(ApiResponse.onSuccess(SuccessCode.OK, response));
   }

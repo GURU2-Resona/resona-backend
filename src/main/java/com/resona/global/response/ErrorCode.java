@@ -18,8 +18,6 @@ public enum ErrorCode {
   INVALID_INPUT_VALUE(HttpStatus.BAD_REQUEST, "COMMON4001", "유효하지 않은 입력값입니다."),
 
   // post
-  CATEGORY_NOT_FOUND(HttpStatus.NOT_FOUND, "CATEGORY404", "해당 카테고리를 찾을 수 없습니다."),
-  SCENE_NOT_FOUND(HttpStatus.NOT_FOUND, "SCENE404", "해당 상황 태그를 찾을 수 없습니다."),
   POST_NOT_FOUND(HttpStatus.NOT_FOUND, "post404", "해당 추천글을 찾을 수 없습니다."),
   SCENE_OTHER_ESSENTIAL(HttpStatus.BAD_REQUEST, "SCENE400", "상황이 기타일 경우 직접 입력값은 필수입니다."),
   CATEGORY_OTHER_ESSENTIAL(HttpStatus.BAD_REQUEST, "CATEGORY400", "카테고리가 기타일 경우 직접 입력값은 필수입니다."),
