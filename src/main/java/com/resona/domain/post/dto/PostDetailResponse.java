@@ -17,6 +17,7 @@ public class PostDetailResponse {
   // 작성자 정보
   private String writerProfileImage;
   private String writerNickname;
+  private Long writerId;
 
   // 노래 및 글 정보
   private String title; // 추천글 제목
@@ -49,6 +50,7 @@ public class PostDetailResponse {
         .postId(post.getId())
         .writerProfileImage(post.getMember().getProfileImage())
         .writerNickname(post.getMember().getNickname())
+        .writerId(post.getMember().getId())
         .title(post.getTitle())
         .content(post.getContent())
         .songTitle(post.getSongTitle())

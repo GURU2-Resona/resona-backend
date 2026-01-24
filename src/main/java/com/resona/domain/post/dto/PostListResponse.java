@@ -16,6 +16,7 @@ public class PostListResponse {
   private String title; // 추천글 제목
   private String songTitle; // 노래 제목
   private String albumImage; // 앨범 커버 이미지
+  private Long writerId;
   private String writerProfileImage; // 작성자 프로필 이미지
   private String writerNickname; // 작성자 닉네임
   private String categoryName;
@@ -35,6 +36,7 @@ public class PostListResponse {
         .title(post.getTitle())
         .songTitle(post.getSongTitle())
         .albumImage(post.getAlbumImage())
+        .writerId(post.getMember().getId())
         .writerProfileImage(post.getMember().getProfileImage())
         .writerNickname(post.getMember().getNickname())
         .categoryName(displayCategory)

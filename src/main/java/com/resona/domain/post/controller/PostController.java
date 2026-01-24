@@ -73,4 +73,19 @@ public class PostController {
     return ResponseEntity.status(SuccessCode.OK.getHttpStatus())
         .body(ApiResponse.onSuccess(SuccessCode.OK, response));
   }
+
+  @Operation(
+      summary = "내가 저장한 추천글 목록 조회",
+      description = "내가 스크랩한 글들의 목록을 조회합니다. 카테고리와 상황으로 필터링이 가능합니다.")
+  @GetMapping("/scraps")
+  public ResponseEntity<ApiResponse<List<PostListResponse>>> getScrappedPosts(
+      @RequestHeader("X-USER-ID") Long memberId,
+      @RequestParam(required = false) Category category,
+      @RequestParam(required = false) Scene scene) {
+
+    List<PostListResponse> response = postService.getScrappedPosts(memberId, category, scene);
+
+    return ResponseEntity.status(SuccessCode.OK.getHttpStatus())
+        .body(ApiResponse.onSuccess(SuccessCode.OK, response));
+  }
 }
