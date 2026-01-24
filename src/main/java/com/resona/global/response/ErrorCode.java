@@ -17,6 +17,10 @@ public enum ErrorCode {
   // 유효성 검사 (RequestBody 필드 에러 등)
   INVALID_INPUT_VALUE(HttpStatus.BAD_REQUEST, "COMMON4001", "유효하지 않은 입력값입니다."),
 
+ // post
+ CATEGORY_NOT_FOUND(HttpStatus.NOT_FOUND, "CATEGORY404", "해당 카테고리를 찾을 수 없습니다."),
+ SCENE_NOT_FOUND(HttpStatus.NOT_FOUND, "SCENE404", "해당 상황 태그를 찾을 수 없습니다."),
+
   // Member
   NOT_FOUND(HttpStatus.NOT_FOUND, "MEMBER404", "해당 사용자를 찾지 못했습니다.");
 

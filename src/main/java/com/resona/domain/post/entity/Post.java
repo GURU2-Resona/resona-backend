@@ -12,37 +12,34 @@ import lombok.*;
 @Table(name = "post")
 public class Post {
 
-  @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Long id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-  @Column(name = "title", nullable = false, length = 50)
-  private String title;
+    @Column(name = "title", nullable = false, length = 50)
+    private String title;
 
-  @Column(name = "content", nullable = false)
-  private String content;
+    @Column(name = "content", nullable = false)
+    private String content;
 
-  @Column(name = "song_title", nullable = false)
-  private String songTitle;
+    @Column(name = "song_title", nullable = false)
+    private String songTitle;
 
-  @Column(name = "singer", nullable = false, length = 50)
-  private String singer;
+    @Column(name = "singer", nullable = false, length = 50)
+    private String singer;
 
-  @Column(name = "song_url", nullable = false)
-  private String songUrl;
+    @Column(name = "song_url", nullable = false)
+    private String songUrl;
 
-  @Column(name = "saved")
-  @Builder.Default // Builder 패턴 사용 시 기본값 false 적용
-  private Boolean saved = false;
+    // 앨범 커버(썸네일) 이미지
+    @Column(name = "album_image")
+    private String albumImage;
 
-  // Member와 다대일 관계
-  @ManyToOne(fetch = FetchType.LAZY)
-  @JoinColumn(name = "member_id", nullable = false)
-  private Member member;
+    @Column(name = "saved")
+    @Builder.Default
+    private Boolean saved = false;
 
-  // 비즈니스 로직 (수정 편의 메서드 예시)
-  public void updateContent(String title, String content) {
-    this.title = title;
-    this.content = content;
-  }
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "member_id", nullable = false)
+    private Member member;
 }
