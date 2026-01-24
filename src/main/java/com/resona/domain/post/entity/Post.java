@@ -31,18 +31,15 @@ public class Post {
   @Column(name = "song_url", nullable = false)
   private String songUrl;
 
+  // 앨범 커버(썸네일) 이미지
+  @Column(name = "album_image")
+  private String albumImage;
+
   @Column(name = "saved")
-  @Builder.Default // Builder 패턴 사용 시 기본값 false 적용
+  @Builder.Default
   private Boolean saved = false;
 
-  // Member와 다대일 관계
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "member_id", nullable = false)
   private Member member;
-
-  // 비즈니스 로직 (수정 편의 메서드 예시)
-  public void updateContent(String title, String content) {
-    this.title = title;
-    this.content = content;
-  }
 }
