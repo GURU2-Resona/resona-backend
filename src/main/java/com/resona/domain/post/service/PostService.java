@@ -11,9 +11,10 @@ public interface PostService {
    */
   PostCreateResponse createPost(Long memberId, PostCreateRequest request);
 
-    /**
-     * 추천글 스크랩 (저장/취소 )
-     * @return true: 저장됨, false: 저장 취소
-     */
-    boolean scrapPost(Long memberId, Long postId);
+  /**
+   * 추천글 스크랩 (저장/취소 )
+   *
+   * @return true: 저장됨, false: 저장 취소
+   */
+  boolean scrapPost(Long memberId, Long postId);
 }

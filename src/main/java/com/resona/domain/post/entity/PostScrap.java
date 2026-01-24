@@ -12,23 +12,20 @@ import lombok.*;
 @Table(name = "post_scrap")
 public class PostScrap {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "member_id", nullable = false)
-    private Member member;
+  @ManyToOne(fetch = FetchType.LAZY)
+  @JoinColumn(name = "member_id", nullable = false)
+  private Member member;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "post_id", nullable = false)
-    private Post post;
+  @ManyToOne(fetch = FetchType.LAZY)
+  @JoinColumn(name = "post_id", nullable = false)
+  private Post post;
 
-    // 생성 메서드
-    public static PostScrap createScrap(Member member, Post post) {
-        return PostScrap.builder()
-                .member(member)
-                .post(post)
-                .build();
-    }
+  // 생성 메서드
+  public static PostScrap createScrap(Member member, Post post) {
+    return PostScrap.builder().member(member).post(post).build();
+  }
 }

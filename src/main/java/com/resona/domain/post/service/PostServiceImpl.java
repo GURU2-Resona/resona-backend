@@ -18,11 +18,10 @@ import com.resona.domain.scene.entity.Scene;
 import com.resona.domain.scene.repository.SceneRepository;
 import com.resona.global.exception.GlobalException;
 import com.resona.global.response.ErrorCode;
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -123,28 +122,32 @@ public class PostServiceImpl implements PostService {
     return scene; // 찾거나 만든 객체 리턴
   }
 
-   @Override
-   @Transactional
-   public boolean scrapPost(Long memberId, Long postId) {
-        // 회원과 게시글 조회
-        Member member = memberRepository.findById(memberId)
-                .orElseThrow(() -> new GlobalException(ErrorCode.NOT_FOUND));
+  @Override
+  @Transactional
+  public boolean scrapPost(Long memberId, Long postId) {
+    // 회원과 게시글 조회
+    Member member =
+        memberRepository
+            .findById(memberId)
+            .orElseThrow(() -> new GlobalException(ErrorCode.NOT_FOUND));
 
-        Post post = postRepository.findById(postId)
-                .orElseThrow(() -> new GlobalException(ErrorCode.POST_NOT_FOUND));
+    Post post =
+        postRepository
+            .findById(postId)
+            .orElseThrow(() -> new GlobalException(ErrorCode.POST_NOT_FOUND));
 
-        // 이미 스크랩되어 있는지 확인
-        Optional<PostScrap> scrapOptional = postScrapRepository.findByMemberAndPost(member, post);
+    // 이미 스크랩되어 있는지 확인
+    Optional<PostScrap> scrapOptional = postScrapRepository.findByMemberAndPost(member, post);
 
-        if (scrapOptional.isPresent()) {
-            // 이미 존재하면 -> 스크랩 취소 (삭제)
-            postScrapRepository.delete(scrapOptional.get());
-            return false;
-        } else {
-            //없으면 -> 스크랩 저장
-            PostScrap postScrap = PostScrap.createScrap(member, post);
-            postScrapRepository.save(postScrap);
-            return true; // 저장됨
-        }
+    if (scrapOptional.isPresent()) {
+      // 이미 존재하면 -> 스크랩 취소 (삭제)
+      postScrapRepository.delete(scrapOptional.get());
+      return false;
+    } else {
+      // 없으면 -> 스크랩 저장
+      PostScrap postScrap = PostScrap.createScrap(member, post);
+      postScrapRepository.save(postScrap);
+      return true; // 저장됨
     }
+  }
 }
