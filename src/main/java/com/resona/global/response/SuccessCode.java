@@ -27,7 +27,7 @@ public enum SuccessCode implements BaseCode {
     //user
     USER_UPDATE_OK(HttpStatus.OK, "USER2001", "사용자 정보가 수정되었습니다."),
     NICKNAME_SAVE_OK(HttpStatus.OK ,"MEMBER200", "닉네임이 저장되었습니다."),
-    MEMBER_PROFILE_GET_OK(HttpStatus.OK, "MEMBER2001", "회원 프로필 조회에 성공하였습니다.");
+    MEMBER_PROFILE_GET_OK(HttpStatus.OK, "MEMBER2001", "회원 프로필 조회에 성공하였습니다."),
     USER_LOGIN_OK(HttpStatus.OK ,"MEMBER200_2", "로그인에 성공했습니다..");
 
     private final HttpStatus status;
