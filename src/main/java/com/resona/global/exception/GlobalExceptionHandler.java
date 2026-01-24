@@ -5,6 +5,7 @@ import com.resona.global.response.ErrorCode;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.bind.MissingRequestHeaderException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
@@ -56,4 +57,16 @@ public class GlobalExceptionHandler {
     return ResponseEntity.status(ErrorCode._INTERNAL_SERVER_ERROR.getHttpStatus())
         .body(ApiResponse.onFailure(ErrorCode._INTERNAL_SERVER_ERROR, e.getMessage()));
   }
+
+    // 필수 헤더 누락 처리 (X-USER-ID가 없을 때)
+    @ExceptionHandler(MissingRequestHeaderException.class)
+    public ResponseEntity<ApiResponse<String>> handleMissingRequestHeaderException(
+            MissingRequestHeaderException e) {
+        log.warn("Missing Header: {}", e.getHeaderName());
+        String errorMessage = String.format("필수 헤더 '%s'가 누락되었습니다.", e.getHeaderName());
+
+        // 400 Bad Request로 처리
+        return ResponseEntity.status(ErrorCode._BAD_REQUEST.getHttpStatus())
+                .body(ApiResponse.onFailure(ErrorCode._BAD_REQUEST, errorMessage));
+    }
 }
