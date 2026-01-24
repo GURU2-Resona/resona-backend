@@ -13,6 +13,7 @@ import lombok.Getter;
 public class PostCreateResponse {
 
   private Long postId;
+  private Long userId;
   private String title;
   private String content;
   private String songTitle;
@@ -35,6 +36,7 @@ public class PostCreateResponse {
 
     return PostCreateResponse.builder()
         .postId(post.getId())
+        .userId(post.getMember().getId())
         .title(post.getTitle())
         .content(post.getContent())
         .songTitle(post.getSongTitle())
