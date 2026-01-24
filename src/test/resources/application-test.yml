@@ -22,3 +22,6 @@ kakao:
   client-secret: dummy
 openai:
   api-key: test-api-key-123456
+env:
+  KAKAO_CLIENT_ID: fake-client-id
+  OPENAI_KEY: asdhfashdaiwehflwaie;lwihefliwehfweihfoweihfowehfow
