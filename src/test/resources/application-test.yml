@@ -16,3 +16,12 @@ jwt:
   secret: test-secret-key-for-jwt-testing-purpose-only-123456
   access-token-expiration: 1800000
   refresh-token-expiration: 1209600000
+
+kakao:
+  client-id: dummy
+  client-secret: dummy
+openai:
+  api-key: test-api-key-123456
+env:
+  YOUTUBE_API_KEY: AIsderrrrrrrrrrrr
+  OPENAI_KEY: asdhfashdaiwehflwaie;lwihefliwehfweihfoweihfowehfow
