@@ -24,19 +24,19 @@ public interface PostRepository extends JpaRepository<Post, Long> {
   @Query("SELECT p FROM Post p JOIN FETCH p.member WHERE p.id = :id")
   Optional<Post> findByIdWithMember(@Param("id") Long id);
 
-    // 내가 저장한 추천글 목록 조회
-    // PostScrap과 조인하여 내 아이디(ps.member.id)로 필터링
-    // 정렬은 최근에 스크랩한 순서(ps.id DESC)
-    @Query(
-            "SELECT p FROM Post p "
-                    + "JOIN PostScrap ps ON ps.post = p "
-                    + "JOIN FETCH p.member m "
-                    + "WHERE ps.member.id = :memberId "
-                    + "AND (:category IS NULL OR p.category = :category) "
-                    + "AND (:scene IS NULL OR p.scene = :scene) "
-                    + "ORDER BY ps.id DESC")
-    List<Post> findAllScrappedByFilters(
-            @Param("memberId") Long memberId,
-            @Param("category") Category category,
-            @Param("scene") Scene scene);
+  // 내가 저장한 추천글 목록 조회
+  // PostScrap과 조인하여 내 아이디(ps.member.id)로 필터링
+  // 정렬은 최근에 스크랩한 순서(ps.id DESC)
+  @Query(
+      "SELECT p FROM Post p "
+          + "JOIN PostScrap ps ON ps.post = p "
+          + "JOIN FETCH p.member m "
+          + "WHERE ps.member.id = :memberId "
+          + "AND (:category IS NULL OR p.category = :category) "
+          + "AND (:scene IS NULL OR p.scene = :scene) "
+          + "ORDER BY ps.id DESC")
+  List<Post> findAllScrappedByFilters(
+      @Param("memberId") Long memberId,
+      @Param("category") Category category,
+      @Param("scene") Scene scene);
 }
