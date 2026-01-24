@@ -6,19 +6,16 @@ import lombok.Getter;
 
 public class MemberReqDto {
 
-    @Getter
-    public static class Nickname{
+  @Getter
+  public static class Nickname {
 
-        @NotBlank
-        @Size(min = 1, max = 20)
-        private String nickName;
+    @NotBlank
+    @Size(min = 1, max = 20)
+    private String nickName;
+  }
 
-    }
-
-    @Getter
-    public static class Login {
-        @NotBlank
-        private String token;
-    }
-
+  @Getter
+  public static class Login {
+    @NotBlank private String token;
+  }
 }

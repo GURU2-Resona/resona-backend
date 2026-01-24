@@ -23,11 +23,11 @@ public class MemberResDto {
     @Schema(description = "프로필 이미지 URL", example = "https://example.com/profile.png")
     private String profileImage;
   }
-  
+
   @Getter
-    @AllArgsConstructor
-    public static class Tokens{
-        private String accessToken;
-        private String refreshToken;
-    }
+  @AllArgsConstructor
+  public static class Tokens {
+    private String accessToken;
+    private String refreshToken;
+  }
 }
