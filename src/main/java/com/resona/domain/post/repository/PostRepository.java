@@ -40,16 +40,16 @@ public interface PostRepository extends JpaRepository<Post, Long> {
       @Param("category") Category category,
       @Param("scene") Scene scene);
 
-    // 특정 사용자가 작성한 글 목록 조회 (타인 프로필)
-    // 작성자 ID(writerId)로 필터링 + 카테고리/상황 필터링 + Fetch Join
-    @Query(
-            "SELECT p FROM Post p JOIN FETCH p.member m "
-                    + "WHERE p.member.id = :writerId "
-                    + "AND (:category IS NULL OR p.category = :category) "
-                    + "AND (:scene IS NULL OR p.scene = :scene) "
-                    + "ORDER BY p.id DESC")
-    List<Post> findAllByWriterIdAndFilters(
-            @Param("writerId") Long writerId,
-            @Param("category") Category category,
-            @Param("scene") Scene scene);
+  // 특정 사용자가 작성한 글 목록 조회 (타인 프로필)
+  // 작성자 ID(writerId)로 필터링 + 카테고리/상황 필터링 + Fetch Join
+  @Query(
+      "SELECT p FROM Post p JOIN FETCH p.member m "
+          + "WHERE p.member.id = :writerId "
+          + "AND (:category IS NULL OR p.category = :category) "
+          + "AND (:scene IS NULL OR p.scene = :scene) "
+          + "ORDER BY p.id DESC")
+  List<Post> findAllByWriterIdAndFilters(
+      @Param("writerId") Long writerId,
+      @Param("category") Category category,
+      @Param("scene") Scene scene);
 }
