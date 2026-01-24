@@ -28,3 +28,6 @@ jwt:
   secret: ${SECRET_KEY}
   access-token-expiration: 1800000      # 30분
   refresh-token-expiration: 1209600000  # 14일
+
+openai:
+  api-key: ${OPENAI_KEY}
