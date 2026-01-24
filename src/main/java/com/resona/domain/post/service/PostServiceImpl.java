@@ -134,4 +134,21 @@ public class PostServiceImpl implements PostService {
     // DTO 변환 (기존 PostListResponse 재사용)
     return scrappedPosts.stream().map(PostListResponse::of).collect(Collectors.toList());
   }
+
+    // 특정 작성자의 글 목록 조회 구현
+    @Override
+    public List<PostListResponse> getMemberPosts(Long writerId, Category category, Scene scene) {
+        // 작성자가 실제로 존재하는지 확인
+        if (!memberRepository.existsById(writerId)) {
+            throw new GlobalException(ErrorCode.NOT_FOUND);
+        }
+
+        //해당 작성자의 글 목록 조회 (필터링 포함)
+        List<Post> memberPosts = postRepository.findAllByWriterIdAndFilters(writerId, category, scene);
+
+        // DTO 변환
+        return memberPosts.stream()
+                .map(PostListResponse::of)
+                .collect(Collectors.toList());
+    }
 }
