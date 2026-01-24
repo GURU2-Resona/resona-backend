@@ -22,7 +22,7 @@ public class SecurityConfig {
                         "/v3/api-docs/**",
                         "/swagger-resources/**",
                         "/members/**",
-                                "/posts/**")
+                        "/posts/**")
                     .permitAll()
                     .anyRequest()
                     .authenticated());
