@@ -23,5 +23,5 @@ kakao:
 openai:
   api-key: test-api-key-123456
 env:
-  KAKAO_CLIENT_ID: fake-client-id
+  YOUTUBE_API_KEY: AIsderrrrrrrrrrrr
   OPENAI_KEY: asdhfashdaiwehflwaie;lwihefliwehfweihfoweihfowehfow
