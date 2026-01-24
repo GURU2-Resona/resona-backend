@@ -6,6 +6,6 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor
 public class Snippet {
-    private String title;
-    private String channelTitle;
+  private String title;
+  private String channelTitle;
 }

@@ -20,13 +20,14 @@ import org.springframework.web.bind.annotation.RestController;
 @Tag(name = "Onboarding", description = "온보딩 관련 API")
 public class OnboardingController {
 
-    private final OnboardingService onboardingService;
+  private final OnboardingService onboardingService;
 
-    @Operation(summary = "온보딩 노래추천 API", description = "카테고리와 상황을 기반으로 노래를 추천합니다.")
-    @PostMapping("/recommend")
-    public ApiResponse<OnboardingResDto.Recommend> getRecommendMusic(
-            @Valid @RequestBody OnboardingReqDto.Category dto)
-    {
-        return ApiResponse.onSuccess(SuccessCode.RECOMMEND_OK, onboardingService.recommendMusic(dto.getCategory(), dto.getScene()));
-    }
+  @Operation(summary = "온보딩 노래추천 API", description = "카테고리와 상황을 기반으로 노래를 추천합니다.")
+  @PostMapping("/recommend")
+  public ApiResponse<OnboardingResDto.Recommend> getRecommendMusic(
+      @Valid @RequestBody OnboardingReqDto.Category dto) {
+    return ApiResponse.onSuccess(
+        SuccessCode.RECOMMEND_OK,
+        onboardingService.recommendMusic(dto.getCategory(), dto.getScene()));
+  }
 }

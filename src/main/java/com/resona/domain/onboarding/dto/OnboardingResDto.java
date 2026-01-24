@@ -5,17 +5,17 @@ import lombok.Getter;
 
 public class OnboardingResDto {
 
-    @Getter
-    public static class Song{
-        private String title;
-        private String artist;
-    }
+  @Getter
+  public static class Song {
+    private String title;
+    private String artist;
+  }
 
-    @Getter
-    @Builder
-    public static class Recommend{
-        private String title;
-        private String artist;
-        private String youtubeUrl;
-    }
+  @Getter
+  @Builder
+  public static class Recommend {
+    private String title;
+    private String artist;
+    private String youtubeUrl;
+  }
 }

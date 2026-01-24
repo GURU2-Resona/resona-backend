@@ -6,6 +6,6 @@ import lombok.Data;
 @Data
 @Builder
 public class GptMessage {
-    private String role;
-    private String content;
+  private String role;
+  private String content;
 }
