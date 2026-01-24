@@ -1,12 +1,14 @@
 package com.resona.domain.member.service;
 
+import com.resona.domain.member.converter.MemberConverter;
 import com.resona.domain.member.dto.KakaoUserInfo;
+import com.resona.domain.member.dto.MemberResDto;
 import com.resona.domain.member.entity.Member;
 import com.resona.domain.member.exception.MemberException;
 import com.resona.domain.member.repository.MemberRepository;
 import com.resona.global.oAuth.JwtProvider;
 import com.resona.global.response.ErrorCode;
-import jakarta.transaction.Transactional;
+import org.springframework.transaction.annotation.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

@@ -33,5 +33,4 @@ public interface MemberControllerDocs {
     ApiResponse<MemberResDto.Profile> getMemberProfile(
         @Parameter(description = "조회할 회원의 ID", example = "1") @PathVariable(name = "memberId")
             Long memberId);
-  }
 }
