@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
 @Slf4j
 @RestControllerAdvice
@@ -33,7 +34,20 @@ public class GlobalExceptionHandler {
         .body(ApiResponse.onFailure(ErrorCode.INVALID_INPUT_VALUE, errorMessage));
   }
 
-  // 3. 그 외 알 수 없는 모든 서버 에러 처리 (500)
+  // 3. 파라미터 타입 불일치 에러
+    @ExceptionHandler(MethodArgumentTypeMismatchException.class)
+    public ResponseEntity<ApiResponse<String>> handleMethodArgumentTypeMismatch(
+            MethodArgumentTypeMismatchException e) {
+        log.warn("Type Mismatch Error: {}", e.getMessage());
+
+        // 어떤 파라미터가 잘못되었는지
+        String errorMessage = String.format("파라미터 '%s'의 값이 잘못되었습니다. 입력된 값: (%s)", e.getName(), e.getValue());
+
+        return ResponseEntity.status(ErrorCode.INVALID_INPUT_VALUE.getHttpStatus())
+                .body(ApiResponse.onFailure(ErrorCode.INVALID_INPUT_VALUE, errorMessage));
+    }
+
+  // 4. 그 외 알 수 없는 모든 서버 에러 처리 (500)
   @ExceptionHandler(Exception.class)
   public ResponseEntity<ApiResponse<String>> handleException(Exception e) {
     log.error("Unhandled Exception: ", e);
