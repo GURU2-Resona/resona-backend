@@ -11,13 +11,13 @@ import lombok.*;
 @Table(name = "scene")
 public class Scene {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private Long id;
 
-    @Column(name = "name", nullable = false)
-    private String name;
+  @Column(name = "name", nullable = false)
+  private String name;
 
-    @Column(name = "recommend", nullable = false)
-    private boolean recommend;
+  @Column(name = "recommend", nullable = false)
+  private boolean recommend;
 }

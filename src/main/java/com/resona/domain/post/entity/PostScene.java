@@ -12,15 +12,15 @@ import lombok.*;
 @Table(name = "post_scene")
 public class PostScene {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "post_id", nullable = false)
-    private Post post;
+  @ManyToOne(fetch = FetchType.LAZY)
+  @JoinColumn(name = "post_id", nullable = false)
+  private Post post;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "scene_id", nullable = false)
-    private Scene scene;
+  @ManyToOne(fetch = FetchType.LAZY)
+  @JoinColumn(name = "scene_id", nullable = false)
+  private Scene scene;
 }
