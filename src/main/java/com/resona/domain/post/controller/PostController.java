@@ -11,11 +11,10 @@ import com.resona.global.response.SuccessCode;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -50,14 +49,16 @@ public class PostController {
           .body(ApiResponse.onSuccess(SuccessCode.POST_UNSCRAP_OK, "스크랩 취소"));
     }
   }
-    @Operation(summary = "추천글 목록 조회", description = "필터링(category, scene)을 적용하여 목록을 조회합니다. 파라미터가 없으면 전체 목록이 조회됩니다.")
-    @GetMapping("")
-    public ResponseEntity<ApiResponse<List<PostListResponse>>> getPosts(
-            @RequestParam(required = false) Category category,
-            @RequestParam(required = false) Scene scene
-    ) {
-        List<PostListResponse> response = postService.getPosts(category, scene);
-        return ResponseEntity.status(SuccessCode.OK.getHttpStatus())
-                .body(ApiResponse.onSuccess(SuccessCode.OK, response));
-    }
+
+  @Operation(
+      summary = "추천글 목록 조회",
+      description = "필터링(category, scene)을 적용하여 목록을 조회합니다. 파라미터가 없으면 전체 목록이 조회됩니다.")
+  @GetMapping("")
+  public ResponseEntity<ApiResponse<List<PostListResponse>>> getPosts(
+      @RequestParam(required = false) Category category,
+      @RequestParam(required = false) Scene scene) {
+    List<PostListResponse> response = postService.getPosts(category, scene);
+    return ResponseEntity.status(SuccessCode.OK.getHttpStatus())
+        .body(ApiResponse.onSuccess(SuccessCode.OK, response));
+  }
 }

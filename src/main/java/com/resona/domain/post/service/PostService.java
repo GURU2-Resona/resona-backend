@@ -21,5 +21,6 @@ public interface PostService {
    * @return true: 저장됨, false: 저장 취소
    */
   boolean scrapPost(Long memberId, Long postId);
+
   List<PostListResponse> getPosts(Category category, Scene scene);
 }

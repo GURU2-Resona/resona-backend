@@ -35,17 +35,18 @@ public class GlobalExceptionHandler {
   }
 
   // 3. 파라미터 타입 불일치 에러
-    @ExceptionHandler(MethodArgumentTypeMismatchException.class)
-    public ResponseEntity<ApiResponse<String>> handleMethodArgumentTypeMismatch(
-            MethodArgumentTypeMismatchException e) {
-        log.warn("Type Mismatch Error: {}", e.getMessage());
+  @ExceptionHandler(MethodArgumentTypeMismatchException.class)
+  public ResponseEntity<ApiResponse<String>> handleMethodArgumentTypeMismatch(
+      MethodArgumentTypeMismatchException e) {
+    log.warn("Type Mismatch Error: {}", e.getMessage());
 
-        // 어떤 파라미터가 잘못되었는지
-        String errorMessage = String.format("파라미터 '%s'의 값이 잘못되었습니다. 입력된 값: (%s)", e.getName(), e.getValue());
+    // 어떤 파라미터가 잘못되었는지
+    String errorMessage =
+        String.format("파라미터 '%s'의 값이 잘못되었습니다. 입력된 값: (%s)", e.getName(), e.getValue());
 
-        return ResponseEntity.status(ErrorCode.INVALID_INPUT_VALUE.getHttpStatus())
-                .body(ApiResponse.onFailure(ErrorCode.INVALID_INPUT_VALUE, errorMessage));
-    }
+    return ResponseEntity.status(ErrorCode.INVALID_INPUT_VALUE.getHttpStatus())
+        .body(ApiResponse.onFailure(ErrorCode.INVALID_INPUT_VALUE, errorMessage));
+  }
 
   // 4. 그 외 알 수 없는 모든 서버 에러 처리 (500)
   @ExceptionHandler(Exception.class)
