@@ -2,6 +2,10 @@ package com.resona.domain.post.service;
 
 import com.resona.domain.post.dto.PostCreateRequest;
 import com.resona.domain.post.dto.PostCreateResponse;
+import com.resona.domain.post.dto.PostListResponse;
+import com.resona.domain.post.entity.enums.Category;
+import com.resona.domain.post.entity.enums.Scene;
+import java.util.List;
 
 public interface PostService {
   /**
@@ -17,4 +21,6 @@ public interface PostService {
    * @return true: 저장됨, false: 저장 취소
    */
   boolean scrapPost(Long memberId, Long postId);
+
+  List<PostListResponse> getPosts(Category category, Scene scene);
 }

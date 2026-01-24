@@ -4,6 +4,7 @@ import com.resona.domain.member.entity.Member;
 import com.resona.domain.member.repository.MemberRepository;
 import com.resona.domain.post.dto.PostCreateRequest;
 import com.resona.domain.post.dto.PostCreateResponse;
+import com.resona.domain.post.dto.PostListResponse;
 import com.resona.domain.post.entity.Post;
 import com.resona.domain.post.entity.PostScrap;
 import com.resona.domain.post.entity.enums.Category;
@@ -12,7 +13,9 @@ import com.resona.domain.post.repository.PostRepository;
 import com.resona.domain.post.repository.PostScrapRepository;
 import com.resona.global.exception.GlobalException;
 import com.resona.global.response.ErrorCode;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -79,5 +82,15 @@ public class PostServiceImpl implements PostService {
       postScrapRepository.save(postScrap);
       return true;
     }
+  }
+
+  // 목록 조회
+  @Override
+  public List<PostListResponse> getPosts(Category category, Scene scene) {
+    // DB에서 필터링된 게시글 목록 조회
+    List<Post> posts = postRepository.findAllByFilters(category, scene);
+
+    // Entity 리스트를 DTO 리스트로 변환
+    return posts.stream().map(PostListResponse::of).collect(Collectors.toList());
   }
 }
