@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequiredArgsConstructor
 @Tag(name = "Post", description = "추천글 관련 API")
-@RequestMapping("api/v1/posts")
+@RequestMapping("/posts")
 public class PostController {
 
   private final PostService postService;
@@ -29,5 +29,20 @@ public class PostController {
 
     return ResponseEntity.status(SuccessCode.POST_SAVE_OK.getHttpStatus())
         .body(ApiResponse.onSuccess(SuccessCode.POST_SAVE_OK, response));
+  }
+
+  @Operation(summary = "추천글 저장/취소", description = "게시글을 보관함에 저장하거나 취소합니다.")
+  @PostMapping("/{postId}/scrap")
+  public ResponseEntity<ApiResponse<String>> scrapPost(
+      @RequestHeader("X-USER-ID") Long memberId, @PathVariable Long postId) {
+    boolean isScraped = postService.scrapPost(memberId, postId);
+
+    if (isScraped) {
+      return ResponseEntity.status(SuccessCode.POST_SCRAP_OK.getHttpStatus())
+          .body(ApiResponse.onSuccess(SuccessCode.POST_SCRAP_OK, "스크랩 성공"));
+    } else {
+      return ResponseEntity.status(SuccessCode.POST_UNSCRAP_OK.getHttpStatus())
+          .body(ApiResponse.onSuccess(SuccessCode.POST_UNSCRAP_OK, "스크랩 취소"));
+    }
   }
 }
