@@ -22,7 +22,11 @@ public class SecurityConfig {
                 .requestMatchers(
                         "/members/login/kakao",
                         "/swagger-ui/**",
-                        "/v3/api-docs/**"
+                        "/v3/api-docs/**",
+                        "/v3/api-docs/**",
+                        "/swagger-resources/**",
+                        "/members/**",
+                        "/posts/**"
                 ).permitAll()
                 .anyRequest().authenticated()
         )
