@@ -13,6 +13,6 @@ spring:
         format_sql: true
 
 jwt:
-  secret: test-secret
+  secret: test-secret-key-for-jwt-testing-purpose-only-123456
   access-token-expiration: 1800000
   refresh-token-expiration: 1209600000
