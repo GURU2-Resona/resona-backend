@@ -30,4 +30,7 @@ public interface PostService {
 
   // 내가 저장한 글 목록 조회
   List<PostListResponse> getScrappedPosts(Long memberId, Category category, Scene scene);
+
+  // 특정 작성자의 글 목록 조회
+  List<PostListResponse> getMemberPosts(Long writerId, Category category, Scene scene);
 }

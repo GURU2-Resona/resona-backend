@@ -88,4 +88,20 @@ public class PostController {
     return ResponseEntity.status(SuccessCode.OK.getHttpStatus())
         .body(ApiResponse.onSuccess(SuccessCode.OK, response));
   }
+
+  @Operation(
+      summary = "특정 사용자의 추천글 목록 조회",
+      description = "특정 사용자(writerId)가 작성한 추천글 목록을 조회합니다. 카테고리와 상황으로 필터링이 가능합니다.")
+  @GetMapping("/members/{writerId}")
+  public ResponseEntity<ApiResponse<List<PostListResponse>>> getMemberPosts(
+      @RequestHeader("X-USER-ID") Long memberId, // 로그인한 사람
+      @PathVariable("writerId") Long writerId,
+      @RequestParam(required = false) Category category,
+      @RequestParam(required = false) Scene scene) {
+
+    List<PostListResponse> response = postService.getMemberPosts(writerId, category, scene);
+
+    return ResponseEntity.status(SuccessCode.OK.getHttpStatus())
+        .body(ApiResponse.onSuccess(SuccessCode.OK, response));
+  }
 }
