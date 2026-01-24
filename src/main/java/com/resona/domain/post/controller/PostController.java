@@ -63,15 +63,14 @@ public class PostController {
         .body(ApiResponse.onSuccess(SuccessCode.OK, response));
   }
 
-    @Operation(summary = "추천글 상세 조회", description = "추천글의 상세 정보를 조회합니다. (스크랩 여부, 본인 글 여부 포함)")
-    @GetMapping("/{postId}")
-    public ResponseEntity<ApiResponse<PostDetailResponse>> getPostDetail(
-            @RequestHeader("X-USER-ID") Long memberId,
-            @PathVariable Long postId) {
+  @Operation(summary = "추천글 상세 조회", description = "추천글의 상세 정보를 조회합니다. (스크랩 여부, 본인 글 여부 포함)")
+  @GetMapping("/{postId}")
+  public ResponseEntity<ApiResponse<PostDetailResponse>> getPostDetail(
+      @RequestHeader("X-USER-ID") Long memberId, @PathVariable Long postId) {
 
-        PostDetailResponse response = postService.getPostDetail(memberId, postId);
+    PostDetailResponse response = postService.getPostDetail(memberId, postId);
 
-        return ResponseEntity.status(SuccessCode.OK.getHttpStatus())
-                .body(ApiResponse.onSuccess(SuccessCode.OK, response));
-    }
+    return ResponseEntity.status(SuccessCode.OK.getHttpStatus())
+        .body(ApiResponse.onSuccess(SuccessCode.OK, response));
+  }
 }

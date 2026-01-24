@@ -5,7 +5,6 @@ import com.resona.domain.post.entity.enums.Category;
 import com.resona.domain.post.entity.enums.Scene;
 import java.util.List;
 import java.util.Optional;
-
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -22,6 +21,6 @@ public interface PostRepository extends JpaRepository<Post, Long> {
   List<Post> findAllByFilters(@Param("category") Category category, @Param("scene") Scene scene);
 
   // 상세 조회용 -> ID로 조회하되 작성자 정보까지 한번에 가져옴
-    @Query("SELECT p FROM Post p JOIN FETCH p.member WHERE p.id = :id")
-    Optional<Post> findByIdWithMember(@Param("id") Long id);
+  @Query("SELECT p FROM Post p JOIN FETCH p.member WHERE p.id = :id")
+  Optional<Post> findByIdWithMember(@Param("id") Long id);
 }

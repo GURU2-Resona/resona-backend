@@ -58,15 +58,15 @@ public class GlobalExceptionHandler {
         .body(ApiResponse.onFailure(ErrorCode._INTERNAL_SERVER_ERROR, e.getMessage()));
   }
 
-    // 필수 헤더 누락 처리 (X-USER-ID가 없을 때)
-    @ExceptionHandler(MissingRequestHeaderException.class)
-    public ResponseEntity<ApiResponse<String>> handleMissingRequestHeaderException(
-            MissingRequestHeaderException e) {
-        log.warn("Missing Header: {}", e.getHeaderName());
-        String errorMessage = String.format("필수 헤더 '%s'가 누락되었습니다.", e.getHeaderName());
+  // 필수 헤더 누락 처리 (X-USER-ID가 없을 때)
+  @ExceptionHandler(MissingRequestHeaderException.class)
+  public ResponseEntity<ApiResponse<String>> handleMissingRequestHeaderException(
+      MissingRequestHeaderException e) {
+    log.warn("Missing Header: {}", e.getHeaderName());
+    String errorMessage = String.format("필수 헤더 '%s'가 누락되었습니다.", e.getHeaderName());
 
-        // 400 Bad Request로 처리
-        return ResponseEntity.status(ErrorCode._BAD_REQUEST.getHttpStatus())
-                .body(ApiResponse.onFailure(ErrorCode._BAD_REQUEST, errorMessage));
-    }
+    // 400 Bad Request로 처리
+    return ResponseEntity.status(ErrorCode._BAD_REQUEST.getHttpStatus())
+        .body(ApiResponse.onFailure(ErrorCode._BAD_REQUEST, errorMessage));
+  }
 }

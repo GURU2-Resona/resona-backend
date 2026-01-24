@@ -25,6 +25,6 @@ public interface PostService {
 
   List<PostListResponse> getPosts(Category category, Scene scene);
 
-//상세 조회 메서드
+  // 상세 조회 메서드
   PostDetailResponse getPostDetail(Long memberId, Long postId);
 }
