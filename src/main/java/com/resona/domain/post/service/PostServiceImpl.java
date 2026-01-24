@@ -5,6 +5,7 @@ import com.resona.domain.category.repository.CategoryRepository;
 import com.resona.domain.member.entity.Member;
 import com.resona.domain.member.repository.MemberRepository;
 import com.resona.domain.post.dto.PostCreateRequest;
+import com.resona.domain.post.dto.PostCreateResponse;
 import com.resona.domain.post.entity.Post;
 import com.resona.domain.post.entity.PostCategory;
 import com.resona.domain.post.entity.PostScene;
@@ -33,8 +34,8 @@ public class PostServiceImpl implements PostService {
 
     @Override
     @Transactional
-    public Long createPost(Long memberId, PostCreateRequest request) {
-        // 작성자 조회 (예외 처리 적용)
+    public PostCreateResponse createPost(Long memberId, PostCreateRequest request) {
+        // 작성자 조회
         Member member = memberRepository.findById(memberId)
                 .orElseThrow(() -> new GlobalException(ErrorCode.NOT_FOUND));
 
@@ -45,42 +46,38 @@ public class PostServiceImpl implements PostService {
                 .songTitle(request.getSongTitle())
                 .singer(request.getSinger())
                 .songUrl(request.getSongUrl())
-                .albumImage(request.getAlbumImage()) // DTO에서 받은 이미지 URL 저장
+                .albumImage(request.getAlbumImage())
                 .member(member)
                 .saved(false)
                 .build();
 
         Post savedPost = postRepository.save(post);
 
-        // 카테고리 연결 (선택 or 생성)
-        connectCategory(savedPost, request.getCategory());
+        // 카테고리 연결 (연결된 Category 객체를 반환받음)
+        Category connectedCategory = connectCategory(savedPost, request.getCategory());
 
-        // 상황 연결 (선택 or 생성)
-        connectScene(savedPost, request.getScene());
+        // 상황 연결 (=연결된 Scene 객체를 반환받음)
+        Scene connectedScene = connectScene(savedPost, request.getScene());
 
-        return savedPost.getId();
+        // 결과 DTO 반환
+        return PostCreateResponse.of(savedPost, connectedCategory, connectedScene);
     }
 
-    /**
-     * 카테고리 연결 로직
-     */
-    private void connectCategory(Post post, PostCreateRequest.TagRequest tagRequest) {
-        if (tagRequest == null) return;
+    private Category connectCategory(Post post, PostCreateRequest.TagRequest tagRequest) {
+        if (tagRequest == null) return null;
 
         Category category = null;
 
-        // 기존 태그 ID가 있는 경우
         if (tagRequest.getId() != null) {
             category = categoryRepository.findById(tagRequest.getId())
                     .orElseThrow(() -> new GlobalException(ErrorCode.CATEGORY_NOT_FOUND));
         }
-        // 직접 입력(이름)이 있는 경우 -> 없으면 생성, 있으면 조회
         else if (tagRequest.getName() != null && !tagRequest.getName().isBlank()) {
             category = categoryRepository.findByName(tagRequest.getName())
                     .orElseGet(() -> categoryRepository.save(
                             Category.builder()
                                     .name(tagRequest.getName())
-                                    .recommend(false) // 사용자가 만든 건 추천 목록 제외
+                                    .recommend(false)
                                     .build()
                     ));
         }
@@ -91,13 +88,11 @@ public class PostServiceImpl implements PostService {
                     .category(category)
                     .build());
         }
+        return category; // 찾거나 만든 객체 리턴
     }
 
-    /**
-     * 상황 연결 로직
-     */
-    private void connectScene(Post post, PostCreateRequest.TagRequest tagRequest) {
-        if (tagRequest == null) return;
+    private Scene connectScene(Post post, PostCreateRequest.TagRequest tagRequest) {
+        if (tagRequest == null) return null;
 
         Scene scene = null;
 
@@ -120,5 +115,6 @@ public class PostServiceImpl implements PostService {
                     .scene(scene)
                     .build());
         }
+        return scene; // 찾거나 만든 객체 리턴
     }
 }
