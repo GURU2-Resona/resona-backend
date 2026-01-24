@@ -10,9 +10,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
-import java.net.URLEncoder;
-
-import static java.nio.charset.StandardCharsets.UTF_8;
 
 @Slf4j
 @Service
@@ -83,12 +80,12 @@ public class OnboardingService {
             YoutubeResponse res, String title, String artist) {
         String lowerTitle = title.toLowerCase().replaceAll(" ", "");
         String lowerArtist = artist.toLowerCase().replaceAll(" ", "");
-        System.out.println("가수: " + artist + " 제목: " + title);
+        log.info("가수={}, 노래={}", title, artist);
 
         return res.getItems().stream()
                 .filter(item -> {
                     String videoTitle = item.getSnippet().getTitle().toLowerCase().replaceAll(" ", "");
-                    System.out.println("추천 제목: " + videoTitle);
+                    log.info("추천 제목={}",videoTitle);
                     boolean hasBasicInfo = videoTitle.contains(lowerTitle) && videoTitle.contains(lowerArtist);
                     boolean isNotNoise = !videoTitle.contains("ai") &&
                             !videoTitle.contains("cover") &&
