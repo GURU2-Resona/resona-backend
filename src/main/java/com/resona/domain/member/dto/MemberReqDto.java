@@ -13,4 +13,9 @@ public class MemberReqDto {
     @Size(min = 1, max = 20)
     private String nickName;
   }
+
+  @Getter
+  public static class Login {
+    @NotBlank private String token;
+  }
 }

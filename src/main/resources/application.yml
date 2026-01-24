@@ -24,3 +24,7 @@ springdoc:
     url: /v3/api-docs
     enabled: ${SWAGGER_ENABLED:true}   # 필요 시 프로필에서 덮어쓰기
 
+jwt:
+  secret: ${SECRET_KEY}
+  access-token-expiration: 1800000      # 30분
+  refresh-token-expiration: 1209600000  # 14일

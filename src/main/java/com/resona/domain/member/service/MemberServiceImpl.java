@@ -1,10 +1,12 @@
 package com.resona.domain.member.service;
 
 import com.resona.domain.member.converter.MemberConverter;
+import com.resona.domain.member.dto.KakaoUserInfo;
 import com.resona.domain.member.dto.MemberResDto;
 import com.resona.domain.member.entity.Member;
 import com.resona.domain.member.exception.MemberException;
 import com.resona.domain.member.repository.MemberRepository;
+import com.resona.global.oAuth.JwtProvider;
 import com.resona.global.response.ErrorCode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -15,13 +17,20 @@ import org.springframework.transaction.annotation.Transactional;
 public class MemberServiceImpl implements MemberService {
 
   private final MemberRepository memberRepository;
+  private final JwtProvider jwtProvider;
 
   @Override
   @Transactional
   public void saveNickname(String token, String nickname) {
-    String email = getEmailByAccessToken(token);
-    Member member = getMemberByEmail(email);
+    Long memberId = getMemberIdByAccessToken(token);
+    Member member = getMemberById(memberId);
     member.updateNickname(nickname);
+  }
+
+  private Member getMemberById(Long id) {
+    return memberRepository
+        .findById(id)
+        .orElseThrow(() -> new MemberException(ErrorCode.NOT_FOUND));
   }
 
   @Override
@@ -35,15 +44,15 @@ public class MemberServiceImpl implements MemberService {
     return MemberConverter.toProfileResDto(member);
   }
 
-  private Member getMemberByEmail(String email) {
+  @Transactional
+  public Member loginOrSignUp(KakaoUserInfo userInfo) {
     return memberRepository
-        .findByEmail(email)
-        .orElseThrow(() -> new MemberException(ErrorCode.NOT_FOUND));
+        .findByProviderId(userInfo.getProviderId())
+        .orElseGet(() -> memberRepository.save(Member.createKakao(userInfo)));
   }
 
-  private String getEmailByAccessToken(String token) {
+  private Long getMemberIdByAccessToken(String token) {
     String accessToken = token.split(" ")[1];
-    //        return jwtUtil.getEmail(accessToken);
-    return "";
+    return jwtProvider.getMemberId(accessToken);
   }
 }
