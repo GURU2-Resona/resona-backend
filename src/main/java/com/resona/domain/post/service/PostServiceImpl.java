@@ -119,4 +119,20 @@ public class PostServiceImpl implements PostService {
     // DTO 변환 및 반환
     return PostDetailResponse.of(post, isSaved, isMine);
   }
+    // 내가 저장한 추천글 목록 조회 구현
+    @Override
+    public List<PostListResponse> getScrappedPosts(Long memberId, Category category, Scene scene) {
+        // 사용자 존재 확인
+        if (!memberRepository.existsById(memberId)) {
+            throw new GlobalException(ErrorCode.NOT_FOUND);
+        }
+
+        // Repository에서 스크랩한 글 목록 조회 (필터링 포함)
+        List<Post> scrappedPosts = postRepository.findAllScrappedByFilters(memberId, category, scene);
+
+        // DTO 변환 (기존 PostListResponse 재사용)
+        return scrappedPosts.stream()
+                .map(PostListResponse::of)
+                .collect(Collectors.toList());
+    }
 }

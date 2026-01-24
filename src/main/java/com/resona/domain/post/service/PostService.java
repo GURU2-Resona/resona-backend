@@ -27,4 +27,7 @@ public interface PostService {
 
   // 상세 조회 메서드
   PostDetailResponse getPostDetail(Long memberId, Long postId);
+
+  // 내가 저장한 글 목록 조회
+  List<PostListResponse> getScrappedPosts(Long memberId, Category category, Scene scene);
 }
