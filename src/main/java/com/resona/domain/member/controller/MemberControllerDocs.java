@@ -4,7 +4,9 @@ import com.resona.domain.member.dto.MemberReqDto;
 import com.resona.domain.member.dto.MemberResDto;
 import com.resona.global.response.ApiResponse;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import jakarta.validation.Valid;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 
@@ -26,4 +28,10 @@ public interface MemberControllerDocs {
     ApiResponse<MemberResDto.Tokens> login(
             @Valid @RequestBody MemberReqDto.Login dto
     );
+  
+    @Operation(summary = "회원 프로필 조회 API", description = "특정 회원의 프로필 정보(ID, 닉네임, 프로필 이미지)를 조회합니다.")
+    ApiResponse<MemberResDto.Profile> getMemberProfile(
+        @Parameter(description = "조회할 회원의 ID", example = "1") @PathVariable(name = "memberId")
+            Long memberId);
+  }
 }

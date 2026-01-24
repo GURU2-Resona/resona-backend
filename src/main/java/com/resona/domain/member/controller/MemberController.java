@@ -35,4 +35,11 @@ public class MemberController implements MemberControllerDocs{
     ){
         return ApiResponse.onSuccess(SuccessCode.USER_LOGIN_OK, kakaoAuthService.login(dto.getToken()));
     }
+  
+    @GetMapping("/{memberId}")
+    public ApiResponse<MemberResDto.Profile> getMemberProfile(
+        @PathVariable(name = "memberId") Long memberId) {
+      MemberResDto.Profile response = memberService.getMemberProfile(memberId);
+      return ApiResponse.onSuccess(SuccessCode.MEMBER_PROFILE_GET_OK, response);
+    }
 }

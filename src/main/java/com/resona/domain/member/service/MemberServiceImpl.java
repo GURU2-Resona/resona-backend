@@ -29,6 +29,18 @@ public class MemberServiceImpl implements MemberService{
         return memberRepository.findById(id)
                 .orElseThrow(() -> new MemberException(ErrorCode.NOT_FOUND));
     }
+  
+    @Override
+    @Transactional(readOnly = true)
+    public MemberResDto.Profile getMemberProfile(Long memberId) {
+      Member member =
+          memberRepository
+              .findById(memberId)
+              .orElseThrow(() -> new MemberException(ErrorCode.NOT_FOUND));
+
+      return MemberConverter.toProfileResDto(member);
+    }
+
 
     @Transactional
     public Member loginOrSignUp(KakaoUserInfo userInfo) {
