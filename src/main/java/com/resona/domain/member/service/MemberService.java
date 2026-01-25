@@ -6,4 +6,5 @@ public interface MemberService {
   public void saveNickname(String token, String nickname);
 
   MemberResDto.Profile getMemberProfile(Long memberId);
+  MemberResDto.ProfileImage getProfileImage(String token);
 }

@@ -29,6 +29,7 @@ public enum SuccessCode implements BaseCode {
   NICKNAME_SAVE_OK(HttpStatus.OK, "MEMBER200", "닉네임이 저장되었습니다."),
   MEMBER_PROFILE_GET_OK(HttpStatus.OK, "MEMBER2001", "회원 프로필 조회에 성공하였습니다."),
   USER_LOGIN_OK(HttpStatus.OK, "MEMBER200_2", "로그인에 성공했습니다.."),
+    MEMBER_PROFILE_IMAGE_OK(HttpStatus.OK, "MEMBER202", "프로필 이미지 조회에 성공하였습니다."),
 
   // post
   POST_SAVE_OK(HttpStatus.CREATED, "POST2001", "추천글이 성공적으로 작성되었습니다."),

@@ -12,4 +12,10 @@ public class MemberConverter {
         .profileImage(member.getProfileImage())
         .build();
   }
+
+  public static MemberResDto.ProfileImage toProfileImage(Member member){
+      return MemberResDto.ProfileImage.builder()
+              .profileImage(member.getProfileImage())
+              .build();
+  }
 }
