@@ -29,5 +29,6 @@ public class MemberResDto {
   public static class Tokens {
     private String accessToken;
     private String refreshToken;
+    private Boolean isNewUser;
   }
 }

@@ -1,6 +1,7 @@
 package com.resona.domain.member.service;
 
 import com.resona.domain.member.dto.KakaoUserInfo;
+import com.resona.domain.member.dto.LoginResult;
 import com.resona.domain.member.dto.MemberResDto;
 import com.resona.domain.member.entity.Member;
 import com.resona.global.oAuth.JwtProvider;
@@ -23,12 +24,14 @@ public class KakaoAuthService {
     KakaoUserInfo kakaoUser = kakaoClient.getUserInfo(kakaoAccessToken);
 
     // 2. 회원 생성 or 조회
-    Member member = memberService.loginOrSignUp(kakaoUser);
+    LoginResult loginResult = memberService.loginOrSignUp(kakaoUser);
+    Member member = loginResult.getMember();
+    boolean isNewUser = loginResult.isNewUser();
 
     // 3. 우리 서비스 토큰 발급
     String accessToken = jwtProvider.createAccessToken(member.getId());
     String refreshToken = jwtProvider.createRefreshToken(member.getId());
 
-    return new MemberResDto.Tokens(accessToken, refreshToken);
+    return new MemberResDto.Tokens(accessToken, refreshToken, isNewUser);
   }
 }

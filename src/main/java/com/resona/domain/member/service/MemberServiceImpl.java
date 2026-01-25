@@ -2,6 +2,7 @@ package com.resona.domain.member.service;
 
 import com.resona.domain.member.converter.MemberConverter;
 import com.resona.domain.member.dto.KakaoUserInfo;
+import com.resona.domain.member.dto.LoginResult;
 import com.resona.domain.member.dto.MemberResDto;
 import com.resona.domain.member.entity.Member;
 import com.resona.domain.member.exception.MemberException;
@@ -45,10 +46,14 @@ public class MemberServiceImpl implements MemberService {
   }
 
   @Transactional
-  public Member loginOrSignUp(KakaoUserInfo userInfo) {
-    return memberRepository
-        .findByProviderId(userInfo.getProviderId())
-        .orElseGet(() -> memberRepository.save(Member.createKakao(userInfo)));
+  public LoginResult loginOrSignUp(KakaoUserInfo userInfo) {
+    Member member =
+        memberRepository
+            .findByProviderId(userInfo.getProviderId())
+            .orElseGet(() -> memberRepository.save(Member.createKakao(userInfo)));
+
+    boolean isNewUser = member.getId() == null; // 신규 회원이면 ID 생성 직후 null이 아님
+    return new LoginResult(member, isNewUser);
   }
 
   private Long getMemberIdByAccessToken(String token) {
