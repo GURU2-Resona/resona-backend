@@ -46,14 +46,14 @@ public class MemberServiceImpl implements MemberService {
     return MemberConverter.toProfileResDto(member);
   }
 
-    @Override
-    public MemberResDto.ProfileImage getProfileImage(String token) {
-        Long memberId = getMemberIdByAccessToken(token);
-        Member member = getMemberById(memberId);
-        return MemberConverter.toProfileImage(member);
-    }
+  @Override
+  public MemberResDto.ProfileImage getProfileImage(String token) {
+    Long memberId = getMemberIdByAccessToken(token);
+    Member member = getMemberById(memberId);
+    return MemberConverter.toProfileImage(member);
+  }
 
-    @Transactional
+  @Transactional
   public LoginResult loginOrSignUp(KakaoUserInfo userInfo) {
     // 1. DB에 존재하는지 확인
     Optional<Member> optionalMember = memberRepository.findByProviderId(userInfo.getProviderId());

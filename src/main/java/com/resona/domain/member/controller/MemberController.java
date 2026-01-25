@@ -40,10 +40,9 @@ public class MemberController implements MemberControllerDocs {
   }
 
   @GetMapping("/profile-image")
-    public ApiResponse<MemberResDto.ProfileImage> getProfileImage(
-            @RequestHeader("Authorization") String token )
-  {
-      MemberResDto.ProfileImage response = memberService.getProfileImage(token);
+  public ApiResponse<MemberResDto.ProfileImage> getProfileImage(
+      @RequestHeader("Authorization") String token) {
+    MemberResDto.ProfileImage response = memberService.getProfileImage(token);
     return ApiResponse.onSuccess(SuccessCode.MEMBER_PROFILE_IMAGE_OK, response);
   }
 }
