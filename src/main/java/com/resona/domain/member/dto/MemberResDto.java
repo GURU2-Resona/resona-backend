@@ -31,4 +31,10 @@ public class MemberResDto {
     private String refreshToken;
     private Boolean isNewUser;
   }
+
+  @Getter
+  @Builder
+  public static class ProfileImage {
+    private String profileImage;
+  }
 }

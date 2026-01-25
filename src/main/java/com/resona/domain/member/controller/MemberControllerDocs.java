@@ -23,4 +23,8 @@ public interface MemberControllerDocs {
   ApiResponse<MemberResDto.Profile> getMemberProfile(
       @Parameter(description = "조회할 회원의 ID", example = "1") @PathVariable(name = "memberId")
           Long memberId);
+
+  @Operation(summary = "프로필 사진 조회 API", description = "프로필 사진을 조회합니다.")
+  ApiResponse<MemberResDto.ProfileImage> getProfileImage(
+      @RequestHeader("Authorization") String token);
 }
