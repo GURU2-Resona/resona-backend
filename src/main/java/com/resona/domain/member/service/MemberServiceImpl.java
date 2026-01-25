@@ -13,8 +13,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Optional;
-
 @Service
 @RequiredArgsConstructor
 public class MemberServiceImpl implements MemberService {
@@ -49,12 +47,13 @@ public class MemberServiceImpl implements MemberService {
 
   @Transactional
   public LoginResult loginOrSignUp(KakaoUserInfo userInfo) {
-      Member member = memberRepository
-              .findByProviderId(userInfo.getProviderId())
-              .orElseGet(() -> memberRepository.save(Member.createKakao(userInfo)));
+    Member member =
+        memberRepository
+            .findByProviderId(userInfo.getProviderId())
+            .orElseGet(() -> memberRepository.save(Member.createKakao(userInfo)));
 
-      boolean isNewUser = member.getId() == null; // 신규 회원이면 ID 생성 직후 null이 아님
-      return new LoginResult(member, isNewUser);
+    boolean isNewUser = member.getId() == null; // 신규 회원이면 ID 생성 직후 null이 아님
+    return new LoginResult(member, isNewUser);
   }
 
   private Long getMemberIdByAccessToken(String token) {
