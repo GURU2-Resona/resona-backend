@@ -52,7 +52,7 @@ public class MemberServiceImpl implements MemberService {
             .findByProviderId(userInfo.getProviderId())
             .orElseGet(() -> memberRepository.save(Member.createKakao(userInfo)));
 
-    boolean isNewUser = member.getId() == null; // 신규 회원이면 ID 생성 직후 null이 아님
+    boolean isNewUser = member.getNickname() == null;
     return new LoginResult(member, isNewUser);
   }
 
