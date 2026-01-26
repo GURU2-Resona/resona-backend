@@ -8,4 +8,6 @@ public interface MemberService {
   MemberResDto.Profile getMemberProfile(Long memberId);
 
   MemberResDto.ProfileImage getProfileImage(String token);
+
+  MemberResDto.Profile getMyProfile(String token);
 }

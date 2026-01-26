@@ -1,6 +1,7 @@
 package com.resona.domain.member.dto;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import java.util.Date;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -30,6 +31,7 @@ public class MemberResDto {
     private String accessToken;
     private String refreshToken;
     private Boolean isNewUser;
+    private Date expireAt;
   }
 
   @Getter

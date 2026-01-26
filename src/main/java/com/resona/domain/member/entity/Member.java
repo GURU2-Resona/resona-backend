@@ -38,4 +38,8 @@ public class Member {
     member.profileImage = userInfo.getProfileImageUrl();
     return member;
   }
+
+  public void updateProfileImage(String profileImage) {
+    this.profileImage = profileImage;
+  }
 }

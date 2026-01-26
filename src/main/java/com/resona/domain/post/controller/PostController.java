@@ -103,4 +103,17 @@ public class PostController {
     return ResponseEntity.status(SuccessCode.OK.getHttpStatus())
         .body(ApiResponse.onSuccess(SuccessCode.OK, response));
   }
+
+  @Operation(summary = "내 추천글 조회 API", description = "내가 쓴 추천글을 조회합니다.")
+  @GetMapping("/me")
+  public ResponseEntity<ApiResponse<List<PostListResponse>>> getMyPosts(
+      @RequestHeader("Authorization") String token,
+      @RequestParam(required = false) Category category,
+      @RequestParam(required = false) Scene scene) {
+
+    List<PostListResponse> response = postService.getMyPosts(token, category, scene);
+
+    return ResponseEntity.status(SuccessCode.OK.getHttpStatus())
+        .body(ApiResponse.onSuccess(SuccessCode.OK, response));
+  }
 }
