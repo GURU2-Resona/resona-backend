@@ -35,7 +35,7 @@ public class PostServiceImpl implements PostService {
   @Override
   @Transactional
   public PostCreateResponse createPost(String token, PostCreateRequest request) {
-      Long memberId = getMemberIdByAccessToken(token);
+    Long memberId = getMemberIdByAccessToken(token);
     Member member =
         memberRepository
             .findById(memberId)
@@ -66,7 +66,7 @@ public class PostServiceImpl implements PostService {
   @Override
   @Transactional
   public boolean scrapPost(String token, Long postId) {
-      Long memberId = getMemberIdByAccessToken(token);
+    Long memberId = getMemberIdByAccessToken(token);
     Member member =
         memberRepository
             .findById(memberId)
@@ -102,7 +102,7 @@ public class PostServiceImpl implements PostService {
   // 상세 조회
   @Override
   public PostDetailResponse getPostDetail(String token, Long postId) {
-      Long memberId = getMemberIdByAccessToken(token);
+    Long memberId = getMemberIdByAccessToken(token);
     // 게시글 조회 (작성자 정보 포함 fetch join)
     Post post =
         postRepository
@@ -128,7 +128,7 @@ public class PostServiceImpl implements PostService {
   // 내가 저장한 추천글 목록 조회 구현
   @Override
   public List<PostListResponse> getScrappedPosts(String token, Category category, Scene scene) {
-      Long memberId = getMemberIdByAccessToken(token);
+    Long memberId = getMemberIdByAccessToken(token);
     // 사용자 존재 확인
     if (!memberRepository.existsById(memberId)) {
       throw new GlobalException(ErrorCode.NOT_FOUND);
@@ -156,8 +156,8 @@ public class PostServiceImpl implements PostService {
     return memberPosts.stream().map(PostListResponse::of).collect(Collectors.toList());
   }
 
-    private Long getMemberIdByAccessToken(String token) {
-        String accessToken = token.split(" ")[1];
-        return jwtProvider.getMemberId(accessToken);
-    }
+  private Long getMemberIdByAccessToken(String token) {
+    String accessToken = token.split(" ")[1];
+    return jwtProvider.getMemberId(accessToken);
+  }
 }

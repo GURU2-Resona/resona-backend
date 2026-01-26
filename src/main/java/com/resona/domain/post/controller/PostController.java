@@ -29,7 +29,7 @@ public class PostController {
   @PostMapping("")
   public ResponseEntity<ApiResponse<PostCreateResponse>>
       createPost( // ApiResponse<Long> -> ApiResponse<PostResponse>
-                  @RequestHeader("Authorization") String token, @RequestBody @Valid PostCreateRequest request) {
+      @RequestHeader("Authorization") String token, @RequestBody @Valid PostCreateRequest request) {
     PostCreateResponse response = postService.createPost(token, request);
 
     return ResponseEntity.status(SuccessCode.POST_SAVE_OK.getHttpStatus())
@@ -39,7 +39,7 @@ public class PostController {
   @Operation(summary = "추천글 저장/취소", description = "게시글을 보관함에 저장하거나 취소합니다.")
   @PostMapping("/{postId}/scrap")
   public ResponseEntity<ApiResponse<String>> scrapPost(
-          @RequestHeader("Authorization") String token, @PathVariable Long postId) {
+      @RequestHeader("Authorization") String token, @PathVariable Long postId) {
     boolean isScraped = postService.scrapPost(token, postId);
 
     if (isScraped) {
@@ -66,7 +66,7 @@ public class PostController {
   @Operation(summary = "추천글 상세 조회", description = "추천글의 상세 정보를 조회합니다. (스크랩 여부, 본인 글 여부 포함)")
   @GetMapping("/{postId}")
   public ResponseEntity<ApiResponse<PostDetailResponse>> getPostDetail(
-          @RequestHeader("Authorization") String token, @PathVariable Long postId) {
+      @RequestHeader("Authorization") String token, @PathVariable Long postId) {
 
     PostDetailResponse response = postService.getPostDetail(token, postId);
 
@@ -79,7 +79,7 @@ public class PostController {
       description = "내가 스크랩한 글들의 목록을 조회합니다. 카테고리와 상황으로 필터링이 가능합니다.")
   @GetMapping("/scraps")
   public ResponseEntity<ApiResponse<List<PostListResponse>>> getScrappedPosts(
-          @RequestHeader("Authorization") String token,
+      @RequestHeader("Authorization") String token,
       @RequestParam(required = false) Category category,
       @RequestParam(required = false) Scene scene) {
 
