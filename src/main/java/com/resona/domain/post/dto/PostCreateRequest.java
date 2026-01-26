@@ -15,13 +15,8 @@ public class PostCreateRequest {
   @NotBlank(message = "노래 제목은 필수입니다.")
   private String songTitle;
 
-  @NotBlank(message = "가수 이름은 필수입니다.")
-  private String singer;
-
   @NotBlank(message = "노래 URL은 필수입니다.")
   private String songUrl;
-
-  private String albumImage;
 
   @NotBlank(message = "글 제목은 필수입니다.")
   private String title;
