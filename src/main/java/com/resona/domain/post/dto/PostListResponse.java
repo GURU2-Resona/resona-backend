@@ -15,6 +15,7 @@ public class PostListResponse {
   private Long postId;
   private String title; // 추천글 제목
   private String songTitle; // 노래 제목
+  private String songUrl;
   private Long writerId;
   private String writerProfileImage; // 작성자 프로필 이미지
   private String writerNickname; // 작성자 닉네임
@@ -34,6 +35,7 @@ public class PostListResponse {
         .postId(post.getId())
         .title(post.getTitle())
         .songTitle(post.getSongTitle())
+        .songUrl(post.getSongUrl())
         .writerId(post.getMember().getId())
         .writerProfileImage(post.getMember().getProfileImage())
         .writerNickname(post.getMember().getNickname())
