@@ -53,6 +53,17 @@ public class MemberServiceImpl implements MemberService {
     return MemberConverter.toProfileImage(member);
   }
 
+  @Override
+  public MemberResDto.Profile getMyProfile(String token) {
+    Long memberId = getMemberIdByAccessToken(token);
+    Member member =
+        memberRepository
+            .findById(memberId)
+            .orElseThrow(() -> new MemberException(ErrorCode.NOT_FOUND));
+
+    return MemberConverter.toProfileResDto(member);
+  }
+
   @Transactional
   public LoginResult loginOrSignUp(KakaoUserInfo userInfo) {
     // 1. DB에 존재하는지 확인
@@ -60,10 +71,15 @@ public class MemberServiceImpl implements MemberService {
 
     // 2. 존재하지 않으면 신규 유저
     boolean isNewUser = optionalMember.isEmpty();
+    Member member;
 
-    // 3. 존재하면 가져오고, 없으면 저장
-    Member member =
-        optionalMember.orElseGet(() -> memberRepository.save(Member.createKakao(userInfo)));
+    // 3. 없으면 저장, 존재할 시 프로필 사진 업데이트
+    if (isNewUser) {
+      member = optionalMember.orElseGet(() -> memberRepository.save(Member.createKakao(userInfo)));
+    } else {
+      member = optionalMember.get();
+      member.updateProfileImage(userInfo.getProfileImageUrl());
+    }
     return new LoginResult(member, isNewUser);
   }
 

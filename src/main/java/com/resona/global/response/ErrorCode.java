@@ -23,7 +23,10 @@ public enum ErrorCode {
   CATEGORY_OTHER_ESSENTIAL(HttpStatus.BAD_REQUEST, "CATEGORY400", "카테고리가 기타일 경우 직접 입력값은 필수입니다."),
 
   // Member
-  NOT_FOUND(HttpStatus.NOT_FOUND, "MEMBER404", "해당 사용자를 찾지 못했습니다.");
+  NOT_FOUND(HttpStatus.NOT_FOUND, "MEMBER404", "해당 사용자를 찾지 못했습니다."),
+
+  // Onboarding
+  RECOMMEND_NOT_FOUND(HttpStatus.NOT_FOUND, "ONBOARDING404", "추천에 실패했습니다.");
 
   private final HttpStatus httpStatus;
   private final String code;
