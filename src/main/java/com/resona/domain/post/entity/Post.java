@@ -29,14 +29,8 @@ public class Post {
   @Column(name = "song_title", nullable = false)
   private String songTitle;
 
-  @Column(name = "singer", nullable = false, length = 50)
-  private String singer;
-
   @Column(name = "song_url", nullable = false)
   private String songUrl;
-
-  @Column(name = "album_image")
-  private String albumImage;
 
   @Column(name = "saved")
   @Builder.Default

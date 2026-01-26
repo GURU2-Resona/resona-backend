@@ -23,9 +23,7 @@ public class PostDetailResponse {
   private String title; // 추천글 제목
   private String content; // 추천글 내용
   private String songTitle; // 노래 제목
-  private String singer; // 가수
   private String songUrl; // 노래 링크 (필요시 사용)
-  private String albumImage; // 앨범 커버
 
   // 상태 플래그
   private Boolean isSaved; // 내가 저장했는지 여부
@@ -54,9 +52,7 @@ public class PostDetailResponse {
         .title(post.getTitle())
         .content(post.getContent())
         .songTitle(post.getSongTitle())
-        .singer(post.getSinger())
         .songUrl(post.getSongUrl())
-        .albumImage(post.getAlbumImage())
         .isSaved(isSaved)
         .isMine(isMine)
         .categoryName(displayCategory)
