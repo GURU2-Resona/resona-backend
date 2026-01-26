@@ -53,18 +53,18 @@ public class MemberServiceImpl implements MemberService {
     return MemberConverter.toProfileImage(member);
   }
 
-    @Override
-    public MemberResDto.Profile getMyProfile(String token) {
-        Long memberId = getMemberIdByAccessToken(token);
-        Member member =
-                memberRepository
-                        .findById(memberId)
-                        .orElseThrow(() -> new MemberException(ErrorCode.NOT_FOUND));
+  @Override
+  public MemberResDto.Profile getMyProfile(String token) {
+    Long memberId = getMemberIdByAccessToken(token);
+    Member member =
+        memberRepository
+            .findById(memberId)
+            .orElseThrow(() -> new MemberException(ErrorCode.NOT_FOUND));
 
-        return MemberConverter.toProfileResDto(member);
-    }
+    return MemberConverter.toProfileResDto(member);
+  }
 
-    @Transactional
+  @Transactional
   public LoginResult loginOrSignUp(KakaoUserInfo userInfo) {
     // 1. DB에 존재하는지 확인
     Optional<Member> optionalMember = memberRepository.findByProviderId(userInfo.getProviderId());
@@ -74,12 +74,11 @@ public class MemberServiceImpl implements MemberService {
     Member member;
 
     // 3. 없으면 저장, 존재할 시 프로필 사진 업데이트
-    if (isNewUser){
-        member =
-                optionalMember.orElseGet(() -> memberRepository.save(Member.createKakao(userInfo)));
+    if (isNewUser) {
+      member = optionalMember.orElseGet(() -> memberRepository.save(Member.createKakao(userInfo)));
     } else {
-        member = optionalMember.get();
-        member.updateProfileImage(userInfo.getProfileImageUrl());
+      member = optionalMember.get();
+      member.updateProfileImage(userInfo.getProfileImageUrl());
     }
     return new LoginResult(member, isNewUser);
   }

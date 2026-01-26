@@ -28,7 +28,6 @@ public interface MemberControllerDocs {
   ApiResponse<MemberResDto.ProfileImage> getProfileImage(
       @RequestHeader("Authorization") String token);
 
-    @Operation(summary = "내 프로필 조회 API", description = "내 프로필 정보를 조회합니다.")
-    ApiResponse<MemberResDto.Profile> getMyProfile(
-            @RequestHeader("Authorization") String token);
+  @Operation(summary = "내 프로필 조회 API", description = "내 프로필 정보를 조회합니다.")
+  ApiResponse<MemberResDto.Profile> getMyProfile(@RequestHeader("Authorization") String token);
 }

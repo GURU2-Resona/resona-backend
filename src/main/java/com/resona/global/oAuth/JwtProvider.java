@@ -70,8 +70,8 @@ public class JwtProvider {
     return Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token).getBody();
   }
 
-    public Date getExpiration(String token) {
-        Claims claims = parseClaims(token);
-        return claims.getExpiration();
-    }
+  public Date getExpiration(String token) {
+    Claims claims = parseClaims(token);
+    return claims.getExpiration();
+  }
 }

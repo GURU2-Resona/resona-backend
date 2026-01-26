@@ -39,7 +39,7 @@ public class Member {
     return member;
   }
 
-  public void updateProfileImage(String profileImage){
-      this.profileImage = profileImage;
+  public void updateProfileImage(String profileImage) {
+    this.profileImage = profileImage;
   }
 }

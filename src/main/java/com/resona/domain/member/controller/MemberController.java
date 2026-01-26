@@ -46,10 +46,10 @@ public class MemberController implements MemberControllerDocs {
     return ApiResponse.onSuccess(SuccessCode.MEMBER_PROFILE_IMAGE_OK, response);
   }
 
-    @GetMapping("/members/profile/me")
-    public ApiResponse<MemberResDto.Profile> getMyProfile(
-            @RequestHeader("Authorization") String token) {
-        MemberResDto.Profile response = memberService.getMyProfile(token);
-        return ApiResponse.onSuccess(SuccessCode.MEMBER_PROFILE_GET_OK, response);
-    }
+  @GetMapping("/members/profile/me")
+  public ApiResponse<MemberResDto.Profile> getMyProfile(
+      @RequestHeader("Authorization") String token) {
+    MemberResDto.Profile response = memberService.getMyProfile(token);
+    return ApiResponse.onSuccess(SuccessCode.MEMBER_PROFILE_GET_OK, response);
+  }
 }
