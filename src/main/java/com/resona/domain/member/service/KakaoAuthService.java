@@ -10,6 +10,8 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
+
 @Service
 @RequiredArgsConstructor
 public class KakaoAuthService {
@@ -31,7 +33,8 @@ public class KakaoAuthService {
     // 3. 우리 서비스 토큰 발급
     String accessToken = jwtProvider.createAccessToken(member.getId());
     String refreshToken = jwtProvider.createRefreshToken(member.getId());
+      Date expireAt = jwtProvider.getExpiration(accessToken);
 
-    return new MemberResDto.Tokens(accessToken, refreshToken, isNewUser);
+    return new MemberResDto.Tokens(accessToken, refreshToken, isNewUser, expireAt);
   }
 }

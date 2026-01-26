@@ -69,4 +69,9 @@ public class JwtProvider {
   private Claims parseClaims(String token) {
     return Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token).getBody();
   }
+
+    public Date getExpiration(String token) {
+        Claims claims = parseClaims(token);
+        return claims.getExpiration();
+    }
 }

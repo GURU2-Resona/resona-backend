@@ -6,6 +6,8 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.util.Date;
+
 public class MemberResDto {
 
   @Getter
@@ -30,6 +32,7 @@ public class MemberResDto {
     private String accessToken;
     private String refreshToken;
     private Boolean isNewUser;
+    private Date expireAt;
   }
 
   @Getter
