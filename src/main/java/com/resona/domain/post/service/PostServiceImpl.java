@@ -154,7 +154,21 @@ public class PostServiceImpl implements PostService {
     return memberPosts.stream().map(PostListResponse::of).collect(Collectors.toList());
   }
 
-  private Long getMemberIdByAccessToken(String token) {
+    @Override
+    public List<PostListResponse> getMyPosts(String token, Category category, Scene scene) {
+        Long memberId = getMemberIdByAccessToken(token);
+        if (!memberRepository.existsById(memberId)) {
+            throw new GlobalException(ErrorCode.NOT_FOUND);
+        }
+
+        // 해당 작성자의 글 목록 조회 (필터링 포함)
+        List<Post> memberPosts = postRepository.findAllByWriterIdAndFilters(memberId, category, scene);
+
+        // DTO 변환
+        return memberPosts.stream().map(PostListResponse::of).collect(Collectors.toList());
+    }
+
+    private Long getMemberIdByAccessToken(String token) {
     String accessToken = token.split(" ")[1];
     return jwtProvider.getMemberId(accessToken);
   }

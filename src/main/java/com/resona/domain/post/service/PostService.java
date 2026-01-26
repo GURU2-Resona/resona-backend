@@ -33,4 +33,7 @@ public interface PostService {
 
   // 특정 작성자의 글 목록 조회
   List<PostListResponse> getMemberPosts(Long writerId, Category category, Scene scene);
+
+  // 내가 작성한 추천글 목록 조회
+  List<PostListResponse> getMyPosts(String token, Category category, Scene scene);
 }
