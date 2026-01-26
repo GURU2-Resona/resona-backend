@@ -13,6 +13,7 @@ import com.resona.domain.post.entity.enums.Scene;
 import com.resona.domain.post.repository.PostRepository;
 import com.resona.domain.post.repository.PostScrapRepository;
 import com.resona.global.exception.GlobalException;
+import com.resona.global.oAuth.JwtProvider;
 import com.resona.global.response.ErrorCode;
 import java.util.List;
 import java.util.Optional;
@@ -29,10 +30,12 @@ public class PostServiceImpl implements PostService {
   private final PostRepository postRepository;
   private final MemberRepository memberRepository;
   private final PostScrapRepository postScrapRepository;
+  private final JwtProvider jwtProvider;
 
   @Override
   @Transactional
-  public PostCreateResponse createPost(Long memberId, PostCreateRequest request) {
+  public PostCreateResponse createPost(String token, PostCreateRequest request) {
+      Long memberId = getMemberIdByAccessToken(token);
     Member member =
         memberRepository
             .findById(memberId)
@@ -62,7 +65,8 @@ public class PostServiceImpl implements PostService {
 
   @Override
   @Transactional
-  public boolean scrapPost(Long memberId, Long postId) {
+  public boolean scrapPost(String token, Long postId) {
+      Long memberId = getMemberIdByAccessToken(token);
     Member member =
         memberRepository
             .findById(memberId)
@@ -97,7 +101,8 @@ public class PostServiceImpl implements PostService {
 
   // 상세 조회
   @Override
-  public PostDetailResponse getPostDetail(Long memberId, Long postId) {
+  public PostDetailResponse getPostDetail(String token, Long postId) {
+      Long memberId = getMemberIdByAccessToken(token);
     // 게시글 조회 (작성자 정보 포함 fetch join)
     Post post =
         postRepository
@@ -122,7 +127,8 @@ public class PostServiceImpl implements PostService {
 
   // 내가 저장한 추천글 목록 조회 구현
   @Override
-  public List<PostListResponse> getScrappedPosts(Long memberId, Category category, Scene scene) {
+  public List<PostListResponse> getScrappedPosts(String token, Category category, Scene scene) {
+      Long memberId = getMemberIdByAccessToken(token);
     // 사용자 존재 확인
     if (!memberRepository.existsById(memberId)) {
       throw new GlobalException(ErrorCode.NOT_FOUND);
@@ -149,4 +155,9 @@ public class PostServiceImpl implements PostService {
     // DTO 변환
     return memberPosts.stream().map(PostListResponse::of).collect(Collectors.toList());
   }
+
+    private Long getMemberIdByAccessToken(String token) {
+        String accessToken = token.split(" ")[1];
+        return jwtProvider.getMemberId(accessToken);
+    }
 }
