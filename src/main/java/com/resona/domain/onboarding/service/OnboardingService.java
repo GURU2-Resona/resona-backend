@@ -2,6 +2,8 @@ package com.resona.domain.onboarding.service;
 
 import com.resona.domain.onboarding.dto.OnboardingResDto;
 import com.resona.domain.onboarding.dto.YoutubeResponse;
+import com.resona.domain.onboarding.excpetion.OnboardingException;
+import com.resona.global.response.ErrorCode;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -45,11 +47,7 @@ public class OnboardingService {
     }
 
     // 3회 실패 시
-    return OnboardingResDto.Recommend.builder()
-        .title("")
-        .artist("")
-        .youtubeUrl("적합한 링크를 찾지 못했습니다.")
-        .build();
+    throw new OnboardingException(ErrorCode.RECOMMEND_NOT_FOUND);
   }
 
   public String searchYoutube(String title, String artist) {
