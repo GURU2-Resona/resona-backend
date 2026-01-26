@@ -53,7 +53,18 @@ public class MemberServiceImpl implements MemberService {
     return MemberConverter.toProfileImage(member);
   }
 
-  @Transactional
+    @Override
+    public MemberResDto.Profile getMyProfile(String token) {
+        Long memberId = getMemberIdByAccessToken(token);
+        Member member =
+                memberRepository
+                        .findById(memberId)
+                        .orElseThrow(() -> new MemberException(ErrorCode.NOT_FOUND));
+
+        return MemberConverter.toProfileResDto(member);
+    }
+
+    @Transactional
   public LoginResult loginOrSignUp(KakaoUserInfo userInfo) {
     // 1. DB에 존재하는지 확인
     Optional<Member> optionalMember = memberRepository.findByProviderId(userInfo.getProviderId());
