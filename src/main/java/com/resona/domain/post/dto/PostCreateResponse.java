@@ -17,9 +17,7 @@ public class PostCreateResponse {
   private String title;
   private String content;
   private String songTitle;
-  private String singer;
   private String songUrl;
-  private String albumImage;
   private Boolean saved;
   private String categoryName;
   private String sceneName;
@@ -40,9 +38,7 @@ public class PostCreateResponse {
         .title(post.getTitle())
         .content(post.getContent())
         .songTitle(post.getSongTitle())
-        .singer(post.getSinger())
         .songUrl(post.getSongUrl())
-        .albumImage(post.getAlbumImage())
         .saved(post.getSaved())
         .categoryName(displayCategory)
         .sceneName(displayScene)
