@@ -22,6 +22,7 @@ public class SecurityConfig {
             auth ->
                 auth.requestMatchers(
                         "/members/login/kakao",
+                        "/members/login/master",
                         "/swagger-ui/**",
                         "/v3/api-docs/**",
                         "/swagger-resources/**")

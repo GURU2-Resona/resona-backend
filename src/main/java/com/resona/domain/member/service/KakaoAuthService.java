@@ -36,4 +36,13 @@ public class KakaoAuthService {
 
     return new MemberResDto.Tokens(accessToken, refreshToken, isNewUser, expireAt);
   }
+
+    @Transactional
+    public MemberResDto.Tokens loginMaster() {
+
+        String accessToken = jwtProvider.createMasterAccessToken(2L);
+        Date expireAt = jwtProvider.getExpiration(accessToken);
+
+        return new MemberResDto.Tokens(accessToken, null, true, expireAt);
+    }
 }

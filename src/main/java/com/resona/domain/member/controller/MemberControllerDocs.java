@@ -30,4 +30,7 @@ public interface MemberControllerDocs {
 
   @Operation(summary = "내 프로필 조회 API", description = "내 프로필 정보를 조회합니다.")
   ApiResponse<MemberResDto.Profile> getMyProfile(@RequestHeader("Authorization") String token);
+
+    @Operation(summary = "마스터 계정 로그인 API", description = "마스터 계정으로 로그인합니다.")
+    ApiResponse<MemberResDto.Tokens> loginMaster();
 }
