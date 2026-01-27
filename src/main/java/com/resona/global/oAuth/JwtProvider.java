@@ -25,11 +25,17 @@ public class JwtProvider {
   @Value("${jwt.refresh-token-expiration}")
   private long refreshTokenExpiration;
 
+  private long masterExpiration = 30L * 24 * 60 * 60 * 1000;
+
   private Key key;
 
   @PostConstruct
   private void init() {
     this.key = Keys.hmacShaKeyFor(secret.getBytes());
+  }
+
+  public String createMasterAccessToken(Long memberId) {
+    return createToken(memberId, masterExpiration);
   }
 
   public String createAccessToken(Long memberId) {

@@ -52,4 +52,9 @@ public class MemberController implements MemberControllerDocs {
     MemberResDto.Profile response = memberService.getMyProfile(token);
     return ApiResponse.onSuccess(SuccessCode.MEMBER_PROFILE_GET_OK, response);
   }
+
+  @PostMapping("/login/master")
+  public ApiResponse<MemberResDto.Tokens> loginMaster() {
+    return ApiResponse.onSuccess(SuccessCode.USER_LOGIN_OK, kakaoAuthService.loginMaster());
+  }
 }
