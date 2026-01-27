@@ -34,9 +34,9 @@ public class JwtProvider {
     this.key = Keys.hmacShaKeyFor(secret.getBytes());
   }
 
-    public String createMasterAccessToken(Long memberId) {
-        return createToken(memberId, masterExpiration);
-    }
+  public String createMasterAccessToken(Long memberId) {
+    return createToken(memberId, masterExpiration);
+  }
 
   public String createAccessToken(Long memberId) {
     return createToken(memberId, accessTokenExpiration);
