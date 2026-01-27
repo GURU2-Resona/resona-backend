@@ -53,7 +53,7 @@ public class MemberController implements MemberControllerDocs {
     return ApiResponse.onSuccess(SuccessCode.MEMBER_PROFILE_GET_OK, response);
   }
 
-  @GetMapping("/login/master")
+  @PostMapping("/login/master")
   public ApiResponse<MemberResDto.Tokens> loginMaster() {
     return ApiResponse.onSuccess(SuccessCode.USER_LOGIN_OK, kakaoAuthService.loginMaster());
   }
